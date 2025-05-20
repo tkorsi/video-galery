@@ -50,5 +50,55 @@ curl http://localhost:8000/videos/
 ## Frontend
 Navigate your browser to `http://localhost:8000/` to see the video gallery.
 
+## Running as a Daemon on Raspberry Pi
+To have the service start automatically on boot and store all videos locally, use a systemd unit:
+
+1. Place the project in a fixed directory (e.g. `/home/pi/video-galery`):
+   ```bash
+   cd /home/pi
+   git clone https://github.com/tkorsi/video-galery.git
+   cd video-galery
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   deactivate
+   ```
+
+2. Create the systemd service file `/etc/systemd/system/video-gallery.service`:
+   ```ini
+   [Unit]
+   Description=Video Gallery FastAPI Service
+   After=network.target
+
+   [Service]
+   Type=simple
+   User=pi
+   WorkingDirectory=/home/pi/video-galery
+   ExecStart=/home/pi/video-galery/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+   Restart=on-failure
+   RestartSec=5s
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. Enable and start the service:
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable video-gallery.service
+   sudo systemctl start video-gallery.service
+   ```
+
+4. Verify status:
+   ```bash
+   sudo systemctl status video-gallery.service
+   ```
+
+5. Access the running service (all uploaded videos and metadata are stored under `/home/pi/video-galery/videos`):
+   - UI: `http://<pi-ip-or-hostname>:8000/`
+   - Swagger: `http://<pi-ip-or-hostname>:8000/docs`
+   - ReDoc: `http://<pi-ip-or-hostname>:8000/redoc`
+
 ---
 Video Gallery © 2025
