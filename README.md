@@ -67,6 +67,7 @@ To have the service start automatically on boot and store all videos locally, us
 
 2. Create the systemd service file `/etc/systemd/system/video-gallery.service`:
    ```ini
+   # /etc/systemd/system/video-gallery.service
    [Unit]
    Description=Video Gallery FastAPI Service
    After=network.target
@@ -74,8 +75,10 @@ To have the service start automatically on boot and store all videos locally, us
    [Service]
    Type=simple
    User=pi
-   WorkingDirectory=/home/pi/video-galery
-   ExecStart=/home/pi/video-galery/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+   Group=pi
+   WorkingDirectory=/home/pi/video-gallery
+   Environment="PATH=/home/pi/video-gallery/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+   ExecStart=uvicorn main:app --host 0.0.0.0 --port 8000
    Restart=on-failure
    RestartSec=5s
 
@@ -95,7 +98,7 @@ To have the service start automatically on boot and store all videos locally, us
    sudo systemctl status video-gallery.service
    ```
 
-5. Access the running service (all uploaded videos and metadata are stored under `/home/pi/video-galery/videos`):
+5. Access the running service (all uploaded videos and metadata are stored under `/home/pi/video-gallery/videos`):
    - UI: `http://<pi-ip-or-hostname>:8000/`
    - Swagger: `http://<pi-ip-or-hostname>:8000/docs`
    - ReDoc: `http://<pi-ip-or-hostname>:8000/redoc`
