@@ -7,6 +7,20 @@ async function fetchVideos() {
     return await response.json();
 }
 
+/** Initialize tab switching between Videos and Upload views */
+function setupTabs() {
+    const tabs = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(tab.dataset.target).classList.add('active');
+        });
+    });
+}
+
 function createVideoCell(video) {
     const cell = document.createElement('div');
     cell.className = 'cell';
@@ -41,6 +55,7 @@ async function loadGallery() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    setupTabs();
     setupUpload();
     loadGallery();
 });

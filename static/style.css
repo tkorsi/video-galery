@@ -1,3 +1,29 @@
+.tabs {
+    margin: 20px;
+    display: flex;
+    border-bottom: 2px solid #ccc;
+}
+.tab-button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    font-size: 1em;
+    color: #555;
+}
+.tab-button.active {
+    border-bottom: 3px solid #3399ff;
+    color: #3399ff;
+    font-weight: bold;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
 .grid {
 .metadata div {
 /* Upload area styling */

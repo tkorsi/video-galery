@@ -8,20 +8,26 @@
 </head>
 <body>
     <h1>Video Gallery</h1>
-    <!-- Upload Area -->
-    <section id="upload-area">
-        <h2>Upload Video</h2>
-        <form id="upload-form">
-            <div id="drop-zone">Drag & Drop video here or click to select</div>
-            <input type="file" id="file-input" name="file" accept="video/*" hidden />
-            <input type="text" id="title-input" name="title" placeholder="Title" required />
-            <input type="text" id="description-input" name="description" placeholder="Description" />
-            <button type="submit">Upload</button>
-        </form>
-        <div id="upload-status"></div>
-    </section>
-    <!-- Gallery -->
-    <div id="gallery" class="grid"></div>
+    <div class="tabs">
+        <button class="tab-button active" data-target="gallery-tab">Videos</button>
+        <button class="tab-button" data-target="upload-tab">Upload</button>
+    </div>
+    <div id="gallery-tab" class="tab-content active">
+        <div id="gallery" class="grid"></div>
+    </div>
+    <div id="upload-tab" class="tab-content">
+        <section id="upload-area">
+            <h2>Upload Video</h2>
+            <form id="upload-form">
+                <div id="drop-zone">Drag & Drop video here or click to select</div>
+                <input type="file" id="file-input" name="file" accept="video/*" hidden />
+                <input type="text" id="title-input" name="title" placeholder="Title" required />
+                <input type="text" id="description-input" name="description" placeholder="Description" />
+                <button type="submit">Upload</button>
+            </form>
+            <div id="upload-status"></div>
+        </section>
+    </div>
     <script src="/static/app.js"></script>
 </body>
 </html>
