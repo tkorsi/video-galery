@@ -15,7 +15,14 @@ STATIC_DIR = "static"
 os.makedirs(VIDEO_DIR, exist_ok=True)
 os.makedirs(STATIC_DIR, exist_ok=True)
 
-app = FastAPI()
+app = FastAPI(
+    title="Video Gallery API",
+    description="A simple web service to upload, store, and retrieve videos with metadata.",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
+)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
